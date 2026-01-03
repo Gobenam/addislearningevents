@@ -1,19 +1,395 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Addis Learning & Events</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Addis Learning & Events | Learning, Play, and Human Connection</title>
+  <meta name="description" content="Addis Learning & Events offers 1:1 tutoring and interactive events using board games, puzzles, and VR to motivate students and build real human connection." />
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      text-align: center;
-      padding-top: 100px;
+    :root{
+      --bg: #071225;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --line: rgba(255,255,255,.14);
+      --accent: #22d3ee;   /* cyan */
+      --accent2:#34d399;   /* green */
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(34,211,238,.25), transparent 65%),
+        radial-gradient(900px 500px at 80% 15%, rgba(52,211,153,.18), transparent 60%),
+        radial-gradient(700px 600px at 50% 90%, rgba(99,102,241,.14), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    .wrap{ max-width: 1120px; margin: 0 auto; padding: 22px; }
+
+    /* top bar */
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding: 10px 0 18px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:48px; height:48px; border-radius: 50%;
+      overflow:hidden; background: rgba(255,255,255,.12);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+    .logo img{ width:100%; height:100%; object-fit: cover; }
+    .brand h1{ font-size: 18px; margin:0; letter-spacing:.2px; }
+    .brand p{ margin:2px 0 0 0; font-size: 13px; color: var(--muted); }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* hero */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      margin-top: 8px;
+    }
+    .panel{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+    .headline{
+      font-size: 44px;
+      line-height: 1.08;
+      margin: 0 0 10px 0;
+      letter-spacing: -.6px;
+    }
+    .sub{
+      color: var(--muted);
+      font-size: 16px;
+      margin: 0 0 18px 0;
+      max-width: 60ch;
+    }
+
+    .badges{
+      display:flex; flex-wrap: wrap; gap:10px;
+      margin: 14px 0 18px 0;
+    }
+    .badge{
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.12);
+      padding: 8px 10px;
+      border-radius: 999px;
+      color: rgba(255,255,255,.86);
+      font-size: 13px;
+    }
+
+    .ctaRow{
+      display:flex; flex-wrap: wrap; gap: 12px;
+      margin-top: 14px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.92);
+      font-weight: 600;
+      font-size: 14px;
+      transition: transform .12s ease, background .12s ease, border .12s ease;
+      cursor: pointer;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.08); }
+    .btn.primary{
+      border: 1px solid rgba(34,211,238,.35);
+      background: linear-gradient(90deg, rgba(34,211,238,.24), rgba(52,211,153,.18));
+    }
+
+    /* right hero card */
+    .kicker{ color: var(--muted); font-size: 13px; margin:0 0 8px 0; }
+    .miniTitle{ margin:0 0 8px 0; font-size: 18px; }
+    .list{ margin: 10px 0 0 0; padding: 0 0 0 18px; color: var(--muted); }
+    .list li{ margin: 7px 0; }
+
+    /* sections */
+    .grid3{
+      display:grid; gap: 14px;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 14px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .card h3{ margin: 0 0 8px 0; font-size: 16px; }
+    .card p{ margin: 0; color: var(--muted); font-size: 14px; }
+
+    .section{
+      margin-top: 18px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .section h2{ margin: 0 0 8px 0; font-size: 20px; }
+    .section p{ margin: 0; color: var(--muted); }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .callout{
+      border: 1px solid rgba(34,211,238,.28);
+      background: rgba(34,211,238,.08);
+      padding: 14px;
+      border-radius: 14px;
+      color: rgba(255,255,255,.9);
+    }
+
+    .contact{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .contactRow{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items:center;
+    }
+    .small{
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    footer{
+      margin: 26px 0 10px 0;
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      text-align:center;
+    }
+
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+      .grid3{ grid-template-columns: 1fr; }
+      .split{ grid-template-columns: 1fr; }
+      .headline{ font-size: 38px; }
     }
   </style>
 </head>
+
 <body>
-  <h1>Addis Learning & Events</h1>
-  <p>Coming Soon</p>
+  <div class="wrap">
+
+    <div class="top">
+      <div class="brand">
+        <div class="logo" aria-label="Addis Learning & Events logo">
+          <img src="addis_learning_events_logo.png" alt="Addis Learning & Events logo" />
+        </div>
+        <div>
+          <h1>Addis Learning & Events</h1>
+          <p>Learning • Play • Human Connection</p>
+        </div>
+      </div>
+
+      <div class="pill">📍 Addis Ababa • Active Programs</div>
+    </div>
+
+    <div class="hero">
+      <div class="panel">
+        <h2 class="headline">Reconnect children to learning — through play, presence, and purpose.</h2>
+        <p class="sub">
+          In a world where digital gadgets can isolate children, we create a healthier alternative:
+          <strong>one-to-one tutoring</strong> followed by safe, supervised enrichment using
+          <strong>board games, puzzles, and VR</strong> to motivate students and make learning exciting.
+        </p>
+
+        <div class="badges">
+          <div class="badge">✅ 1:1 tutoring (core)</div>
+          <div class="badge">🎲 board games & puzzles</div>
+          <div class="badge">🕶️ VR motivation after lesson</div>
+          <div class="badge">🎉 birthdays & events</div>
+          <div class="badge">🌍 diaspora celebrations</div>
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="#parents">Book a 1:1 Session</a>
+          <a class="btn" href="#schools">Bring Us to a School</a>
+          <a class="btn" href="#events">Plan a Birthday / Event</a>
+          <a class="btn" href="#diaspora">Diaspora: Sponsor a Celebration</a>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="kicker">Already in motion</p>
+        <h3 class="miniTitle">Led by Yemeserach Leulseged</h3>
+        <p class="small">
+          Yemeserach is actively running VR + board game experiences at bazaars and gatherings
+          to prove and refine the entertainment model — while building a sustainable pathway to expand tutoring.
+        </p>
+
+        <ul class="list">
+          <li><strong>1-hour tutoring</strong> → then supervised VR/games as motivation.</li>
+          <li>Sessions can be <strong>door-to-door</strong> or at a <strong>public library</strong>.</li>
+          <li>Events generate revenue to hire <strong>highly skilled tutors</strong>.</li>
+        </ul>
+
+        <div style="margin-top:14px" class="callout">
+          <strong>Our model:</strong> entertainment funds education.<br/>
+          More events → more tutors → more learning impact.
+        </div>
+      </div>
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <h3>One-to-One Tutoring</h3>
+        <p>Focused, personal sessions for real progress — built on trust and attention, one student at a time.</p>
+      </div>
+      <div class="card">
+        <h3>Games that build skills</h3>
+        <p>Board games and puzzles develop strategy, patience, teamwork, and communication — without isolation.</p>
+      </div>
+      <div class="card">
+        <h3>VR that motivates</h3>
+        <p>VR is used responsibly as a reward and inspiration after learning — and grows into educational VR over time.</p>
+      </div>
+    </div>
+
+    <div id="schools" class="section">
+      <h2>For Schools (Public & Private)</h2>
+      <p>
+        We support schools with enrichment experiences and student engagement programs that complement classroom learning:
+        VR + board games + guided activities that encourage curiosity, teamwork, and confidence.
+      </p>
+      <div class="ctaRow" style="margin-top:14px">
+        <a class="btn primary" href="mailto:info@addislearningevents.com?subject=School%20Program%20Request%20-%20Addis%20Learning%20%26%20Events">Request a School Visit</a>
+        <a class="btn" href="https://wa.me/251920607391?text=Hello%20Yemeserach%2C%20I%20am%20interested%20in%20a%20school%20program%20with%20Addis%20Learning%20%26%20Events." target="_blank" rel="noopener">WhatsApp (Ethiopia)</a>
+      </div>
+    </div>
+
+    <div id="parents" class="section">
+      <h2>For Parents (Our #1 Priority)</h2>
+      <p>
+        Parents want real learning progress — and children need motivation. Our sessions combine both:
+        <strong>1:1 tutoring first</strong>, then supervised enrichment through games and VR.
+      </p>
+
+      <div class="split">
+        <div class="card" style="background: rgba(255,255,255,.04);">
+          <h3>How sessions happen</h3>
+          <p>
+            We meet families <strong>door-to-door</strong> or at a safe public location such as a <strong>library</strong>.
+            Every session is designed to be respectful, structured, and child-centered.
+          </p>
+        </div>
+        <div class="card" style="background: rgba(255,255,255,.04);">
+          <h3>What children gain</h3>
+          <p>
+            Confidence, focus, teamwork, problem-solving — and a positive relationship with learning.
+          </p>
+        </div>
+      </div>
+
+      <div class="ctaRow" style="margin-top:14px">
+        <a class="btn primary" href="mailto:info@addislearningevents.com?subject=Book%20a%201%3A1%20Session%20-%20Addis%20Learning%20%26%20Events">Book a Session</a>
+        <a class="btn" href="https://wa.me/251920607391?text=Hello%20Yemeserach%2C%20I%20would%20like%20to%20book%20a%201%3A1%20tutoring%20session%20for%20my%20child." target="_blank" rel="noopener">WhatsApp to Book</a>
+      </div>
+    </div>
+
+    <div id="events" class="section">
+      <h2>Birthdays & Events</h2>
+      <p>
+        We bring joyful, supervised entertainment experiences to celebrations — VR stations, board games, puzzles,
+        and interactive group activities. While children enjoy themselves, families also discover a better way to motivate learning.
+      </p>
+
+      <div class="ctaRow" style="margin-top:14px">
+        <a class="btn primary" href="mailto:info@addislearningevents.com?subject=Event%20Booking%20-%20Addis%20Learning%20%26%20Events">Host an Event</a>
+        <a class="btn" href="https://wa.me/251920607391?text=Hello%20Yemeserach%2C%20I%20want%20to%20book%20Addis%20Learning%20%26%20Events%20for%20a%20birthday%20or%20event." target="_blank" rel="noopener">WhatsApp (Ethiopia)</a>
+      </div>
+    </div>
+
+    <div id="diaspora" class="section">
+      <h2>For the Diaspora: Celebrate Your Loved Ones in Ethiopia</h2>
+      <p>
+        Want to be part of a birthday celebration in Ethiopia — even from abroad?
+        You can sponsor the experience, and we’ll handle the entertainment locally with care and purpose.
+      </p>
+
+      <div class="split">
+        <div class="card" style="background: rgba(255,255,255,.04);">
+          <h3>What we provide</h3>
+          <p>VR + games + guided group activities — supervised and family-friendly.</p>
+        </div>
+        <div class="card" style="background: rgba(255,255,255,.04);">
+          <h3>Why it matters</h3>
+          <p>Entertainment revenue helps us hire more skilled tutors and expand one-to-one learning.</p>
+        </div>
+      </div>
+
+      <div class="ctaRow" style="margin-top:14px">
+        <a class="btn primary" href="mailto:info@addislearningevents.com?subject=Diaspora%20Sponsored%20Celebration%20-%20Addis%20Learning%20%26%20Events">Sponsor a Celebration</a>
+        <a class="btn" href="https://wa.me/18484824896?text=Hello%20Gobena%2C%20I%20am%20in%20the%20diaspora%20and%20I%20want%20to%20support%20a%20birthday%20celebration%20in%20Ethiopia." target="_blank" rel="noopener">WhatsApp (USA)</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Contact</h2>
+      <p class="small">We respond quickly. Reach out for tutoring, school programs, or events.</p>
+
+      <div class="contact">
+        <div class="contactRow">
+          <a class="btn primary" href="mailto:info@addislearningevents.com">Email: info@addislearningevents.com</a>
+          <a class="btn" href="tel:+251920607391">Ethiopia: +251 92 060 7391 (Yemeserach)</a>
+          <a class="btn" href="tel:+18484824896">USA: +1 848-482-4896 (Gobena)</a>
+        </div>
+        <div class="contactRow">
+          <a class="btn" href="https://wa.me/251920607391" target="_blank" rel="noopener">WhatsApp Ethiopia</a>
+          <a class="btn" href="https://wa.me/18484824896" target="_blank" rel="noopener">WhatsApp USA</a>
+          <a class="btn" href="https://www.addislearningevents.com/" target="_blank" rel="noopener">Visit Website</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © <span id="y"></span> Addis Learning & Events • Addis Ababa • Learning in motion — growing through experience.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
